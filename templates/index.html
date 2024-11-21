@@ -4,8 +4,109 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My ToDo App</title>
+
+    <!-- Bootstrap Flatly -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
+
+    <!-- DM Serif Text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    
+    <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+        <h2 class="to-do-list-header">To-Do List</h2>
+        <div class="container-fluid">            
+            <div>
+                <form action="/create_task" method="POST">
+                    <header>Add new task</header>
+                    <label class="col-form-label mt-4" for="task">Task</label>
+                    <input type="text" class="form-control" placeholder="New task" name="content">
+                    <label class="col-form-label mt-4" for="category">Category (optional)</label>
+                    <select class="form-control" name="category">
+                        <option value="">Select a category</option>
+                        <option value="Work">Work</option>
+                        <option value="Personal">Personal</option>
+                    </select>
+                    <label class="col-form-label mt-4" for="deadline">Deadline (optional)</label>
+                    <input type="text" class="form-control" placeholder="YYYY-MM-DD" name="deadline">
+                    <button type="submit" class="btn btn-outline-primary">Add task</button>
+                </form>
+
+                <form action="/" method="GET">
+                    <header>Filter by:</header>
+                    <label for="category-filter" class="form-label mt-4 d-block">Category</label>
+                    <select class="form-control" name="category">
+                        <option value="">Select a category</option>
+                        <option value="Work">Work</option>
+                        <option value="Personal">Personal</option>
+                    </select>
+                    <label for="status-filter" class="form-label mt-4 d-block">Status</label>
+                    <select class="form-control" name="finished">
+                        <option value="">Select task status</option>
+                        <option value="Finished">Finished</option>
+                        <option value="Unfinished">Unfinished</option>
+                    </select>
+                    <label for="deadline-filter" class="form-label mt-4 d-block">Deadline spam</label>
+                    <select class="form-control" name="deadline">
+                        <option value="">Select deadline spam</option>
+                        <option value="a week">a week</option>
+                        <option value="15 days">15 days</option>
+                        <option value="a month">a month</option>
+                    </select>      
+                    <button type="submit" class="btn btn-outline-primary">Apply filters</button> 
+                </form>                                
+            </div>
+        </div>
+    </nav>
+    <div class="content">
+        <h2 class="my-tasks-header">My Tasks</h2>
+        <div class="tasks-container">
+            <table class="my-tasks">
+                <thead class="table-header">
+                    <tr>
+                        <th scope="col">Finished?</th>
+                        <th scope="col">Delete</th>
+                        <th scope="col">Content</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Deadline</th>
+                    </tr>
+                </thead>
+                <tbody class="task-content">
+                    {% for task in all_tasks %}
+                    <tr>
+                        <td class="icon">
+                            <a href="/finished_task/{{task.id}}" style="text-decoration:none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="blue" class="bi bi-check-circle" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                    <path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"/>
+                                </svg>
+                            </a>    
+                        </td>
+                        <td class="icon">
+                            <a href="/delete_task/{{task.id}}" style="text-decoration:none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-circle" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                                </svg>
+                            </a>
+                        </td>
+                        <td>
+                            <span class="{% if task.finished == true %} finished_task {% endif %}">{{ task.content }}</span>
+                        </td>
+                        <td>
+                            <span class="{% if task.finished == true %} finished_task {% endif %}">{{ task.category if task.category is not none else '' }}</span>
+                        </td>
+                        <td>
+                            <span class="{% if task.finished == true %} finished_task {% endif %}">{{ task.deadline if task.deadline is not none else '' }}</span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>    
+        </div>        
+    </div>  
 </body>
 </html>

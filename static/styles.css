@@ -1,0 +1,100 @@
+body {
+    display: flex;
+    margin: 30px;
+    background-color: white;
+    box-shadow: 0 0 0 30px #a6021a;
+    border-radius: 20px
+}
+
+.navbar {
+    display: flex;
+    flex-direction: column;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 350px; 
+    background-color: #fcccd4;
+    border-radius: 20px;
+  }
+
+.navbar.bg-dark {
+    background-color: #fcebed !important;
+}
+
+.to-do-list-header {
+    font-family: "DM Serif Text", serif;
+    font-weight: 400;
+    font-style: normal;
+    margin-bottom: 20px;
+}
+
+.my-tasks-header {
+    font-family: "DM Serif Text", serif;
+    font-weight: 400;
+    font-style: italic;
+    margin-bottom: 15px;
+}
+
+header {
+    font-weight: bold;
+    margin-bottom: -10px;
+    font-family: "DM Serif Text", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 18px;
+}
+
+.form-control {
+    width: 300px;
+    margin-bottom: -20px;
+}
+
+.btn {
+    width: 200px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+.content {
+    margin-top: 60px;
+    padding-left: 60px;
+}
+
+.tasks-container {
+    max-width: 850px;
+    max-height: 600px;
+    overflow: auto;
+    border: 2px solid #a6021a;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 0 auto;
+}
+
+.my-tasks {
+    border-spacing: 15px;
+    border-collapse: separate;
+}
+
+.finished_task {
+    text-decoration: line-through;
+    font-style: italic;
+}
+
+.table-header {
+    font-family: "DM Serif Text", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 17px;
+}
+
+.task-content {
+    font-family: "DM Serif Text", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.icon {
+    text-align: center;
+    vertical-align: middle;
+}
