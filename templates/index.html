@@ -24,6 +24,17 @@
                     <header>Add new task</header>
                     <label class="col-form-label mt-4" for="task">Task</label>
                     <input type="text" class="form-control" placeholder="New task" name="content">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            <ul class=flashes>
+                            {% for category, message in messages %}
+                                {% if category == 'error-task' %}
+                                    <li class="{{ category }}">{{ message }}</li>
+                                {% endif %}
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
+                    {% endwith %}
                     <label class="col-form-label mt-4" for="category">Category (optional)</label>
                     <select class="form-control" name="category">
                         <option value="">Select a category</option>
@@ -32,6 +43,17 @@
                     </select>
                     <label class="col-form-label mt-4" for="deadline">Deadline (optional)</label>
                     <input type="text" class="form-control" placeholder="YYYY-MM-DD" name="deadline">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            <ul class=flashes>
+                            {% for category, message in messages %}
+                                {% if category == 'error-date' %}
+                                    <li class="{{ category }}">{{ message }}</li>
+                                {% endif %}
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
+                    {% endwith %}
                     <button type="submit" class="btn btn-outline-primary">Add task</button>
                 </form>
 
@@ -49,7 +71,7 @@
                         <option value="Finished">Finished</option>
                         <option value="Unfinished">Unfinished</option>
                     </select>
-                    <label for="deadline-filter" class="form-label mt-4 d-block">Deadline spam</label>
+                    <label for="deadline-filter" class="form-label mt-4 d-block">Deadline spam (up to a month)</label>
                     <select class="form-control" name="deadline">
                         <option value="">Select deadline spam</option>
                         <option value="a week">a week</option>

@@ -1,9 +1,10 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, flash
 from models import db, Tasks
 from datetime import datetime, date, timedelta
 
 #Conection to database
 app = Flask(__name__)
+app.secret_key = 'Santiclinic' #secret key necessary to sign the session for the use of flash messages
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../database/mytasks.db'
 db.init_app(app)
 
@@ -66,12 +67,27 @@ def create_task():
     category = request.form.get('category')
     deadline = request.form.get('deadline')
 
+    def is_valid_deadline(date_str, date_format='%Y-%m-%d'):
+        try:
+            datetime.strptime(date_str, date_format).date()
+            return True
+        except:
+            return False
+
+    if content == '':
+        flash('Campo obrigatório', 'error-task')
+        return redirect(url_for('home'))
+
     if category == '':
         category = None
     
     if deadline == '':
         deadline = None
-    else:
+
+    if deadline and not is_valid_deadline(deadline):
+        flash('Invalid format. Please use YYYY-MM-DD.', 'error-date')
+        return redirect(url_for('home')) 
+    if deadline:
         deadline = datetime.strptime(deadline, '%Y-%m-%d').date()
 
     task = Tasks (

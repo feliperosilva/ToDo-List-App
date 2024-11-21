@@ -11,11 +11,11 @@ body {
     flex-direction: column;
     top: 0;
     left: 0;
-    height: 100vh;
+    height: 900px;
     width: 350px; 
     background-color: #fcccd4;
     border-radius: 20px;
-  }
+}
 
 .navbar.bg-dark {
     background-color: #fcebed !important;
@@ -97,4 +97,15 @@ header {
 .icon {
     text-align: center;
     vertical-align: middle;
+}
+
+.error-task, .error-date {
+    font-family: "DM Serif Text", serif;
+    font-weight: 400;
+    font-style: normal;
+    color: red;
+    margin-top: 20px;
+    margin-bottom: -45px;
+    font-weight: bold;
+    font-size: small;
 }

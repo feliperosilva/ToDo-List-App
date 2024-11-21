@@ -7,6 +7,7 @@
 4. Choose categories for each task;
 5. Filter tasks by categories, status or deadline;
 6. Delete a task;
+7. The application handles errors such as: missing a task or wrong date format.
 
 ## Versions used in this project:
 - Python 3.12.2
